@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Lab Meriam Parabola – Virtual Lab Fisika Dasar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="lab">
+    <div class="wrap">
+      <header class="top">
+        <div>
+          <h1>Lab Meriam Parabola</h1>
+          <p>
+            Virtual lab Fisika Dasar
+          </p>
+        </div>
+        <div class="bar" style="margin: 0">
+          <a class="btn" id="play" href="game.html">Mainkan game!</a
+          ><button class="btn ghost" id="help" type="button">Cara main</button
+          ><button class="btn ghost" id="theme" type="button">Ganti tema</button>
+        </div>
+      </header>
+
+      <main>
+        <div class="lab">
+          <section class="card" aria-labelledby="h-stage" style="margin: 0">
+            <h2 id="h-stage" style="font-size: 1.2rem; margin-bottom: 0.6rem">Arena tembak</h2>
+            <figure>
+              <div id="zone">
+                <canvas id="stage" aria-label="Simulasi lintasan peluru dari meriam menuju target" role="img"
+                  >Browser Anda belum mendukung canvas.</canvas
+                >
+              </div>
+              <figcaption>
+                Panah biru = kecepatan horizontal (v<sub>x</sub>),
+                panah merah = kecepatan vertikal (v<sub>y</sub>).
+              </figcaption>
+            </figure>
+            <div class="bar">
+              <button class="btn" id="fire" type="button">Tembak</button>
+              <button class="btn ghost" id="rand" type="button">Target acak</button>
+              <button class="btn ghost" id="clear" type="button">Hapus data</button>
+              <span class="score" id="score" aria-live="polite">Kena 0 dari 0</span>
+            </div>
+            <p id="msg" role="status">Atur parameter lalu tekan Tembak untuk memulai.</p>
+            <h3 style="font-size: 1rem; margin-top: 1rem">Pilih planet (seret ke arena, atau klik)</h3>
+            <ul class="planets" aria-label="Daftar planet">
+              <li
+                class="planet on"
+                draggable="true"
+                tabindex="0"
+                role="button"
+                data-n="Bumi"
+                style="--c: #3b82f6"
+              >
+                <i></i>Bumi <small>9,8</small>
+              </li>
+              <li
+                class="planet"
+                draggable="true"
+                tabindex="0"
+                role="button"
+                data-n="Bulan"
+                style="--c: #b9b9b9"
+              >
+                <i></i>Bulan <small>1,62</small>
+              </li>
+              <li
+                class="planet"
+                draggable="true"
+                tabindex="0"
+                role="button"
+                data-n="Mars"
+                style="--c: #d1603d"
+              >
+                <i></i>Mars <small>3,71</small>
+              </li>
+              <li
+                class="planet"
+                draggable="true"
+                tabindex="0"
+                role="button"
+                data-n="Jupiter"
+                style="--c: #d9a066"
+              >
+                <i></i>Jupiter <small>24,8</small>
+              </li>
+            </ul>
+            </section>
+
+          </section>
+
+          <aside class="card" aria-label="Panel kontrol dan hasil">
+            <h2 style="font-size: 1.2rem; margin-top: 0rem">Parameter</h2>
+            <label for="v">Kecepatan awal v₀ <output id="vo"></output></label>
+            <input id="v" type="range" min="5" max="50" step="1" value="20" />
+            <label for="a">Sudut θ <output id="ao"></output></label>
+            <input id="a" type="range" min="5" max="85" step="1" value="45" />
+            <label for="h">Tinggi awal h₀ <output id="ho"></output></label>
+            <input id="h" type="range" min="0" max="30" step="1" value="0" />
+            <label for="g">Gravitasi g<span id="pn"></span> <output id="go"></output></label>
+            <input id="g" type="range" min="1" max="25" step="0.01" value="9.8" />
+            <label for="tx">Posisi target <output id="txo"></output></label>
+            <input id="tx" type="range" min="5" max="150" step="0.5" value="40" />
+            <div class="opt">
+              <label for="speed" style="margin: 0">Kecepatan simulasi</label>
+              <select id="speed">
+                <option value=".5">0,5×</option>
+                <option value="1" selected>1×</option>
+                <option value="2">2×</option>
+              </select>
+            </div>
+            <div class="opt">
+              <input type="checkbox" id="vec" checked /><label for="vec" style="margin: 0; font-weight: 400"
+                >Tampilkan vektor kecepatan</label
+              >
+            </div>
+
+            <h2 style="font-size: 1.1rem; margin-top: 1.2rem">Prediksi teori</h2>
+            <dl>
+              <dt>Jangkauan (R)</dt>
+              <dd id="rR"></dd>
+              <dt>Tinggi maksimum (H)</dt>
+              <dd id="rH"></dd>
+              <dt>Waktu terbang (T)</dt>
+              <dd id="rT"></dd>
+              <dt>v<sub>x</sub> (konstan)</dt>
+              <dd id="rVx"></dd>
+              <dt>v<sub>y</sub> awal</dt>
+              <dd id="rVy"></dd>
+            </dl>
+            <h2 style="font-size: 1.1rem; margin-top: 1.2rem">Jangkauan terhadap sudut</h2>
+            <canvas id="gr" role="img" aria-label="Grafik jangkauan R terhadap sudut tembak"></canvas>
+          </aside>
+        </div>
+
+        <section class="card" aria-labelledby="h-data">
+          <h2 id="h-data" style="font-size: 1.2rem; margin-bottom: 0.6rem">Data percobaan</h2>
+          <div class="tablewrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>v₀ (m/s)</th>
+                  <th>θ (°)</th>
+                  <th>h₀ (m)</th>
+                  <th>g (m/s²)</th>
+                  <th>Jarak (m)</th>
+                  <th>Hasil</th>
+                </tr>
+              </thead>
+              <tbody id="rows">
+                <tr>
+                  <td colspan="7" style="color: var(--muted)">Belum ada data. Tekan Tembak untuk memulai.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="h-teori">
+          <h2 id="h-teori" style="font-size: 1.2rem; margin-bottom: 0.4rem">Tentang lab ini</h2>
+          <p>
+            Lab ini mensimulasikan gerak parabola tanpa hambatan udara. Gerak horizontal berkecepatan tetap
+            (GLB), sedangkan gerak vertikal dipercepat oleh gravitasi (GLBB). Pengguna dapat mengubah v₀,
+            sudut, ketinggian, dan gravitasi planet, mengamati lintasan secara real-time, mencatat data, dan
+            mencoba mengenai target.
+          </p>
+          <p>
+            <strong>Tujuan belajar:</strong> memahami bahwa jangkauan bergantung pada v₀, θ, dan g; menemukan
+            sudut yang memberi jangkauan terjauh (45° saat h₀ = 0); dan membandingkan hasil percobaan dengan
+            rumus.
+          </p>
+          <details>
+            <summary>Rumus yang dipakai</summary>
+            <p>
+              <span class="f">x = v₀ cos θ · t</span> &nbsp;
+              <span class="f">y = h₀ + v₀ sin θ · t − ½ g t²</span>
+            </p>
+            <p>
+              <span class="f">T = (v₀ sin θ + √((v₀ sin θ)² + 2 g h₀)) / g</span> &nbsp;
+              <span class="f">R = v₀ cos θ · T</span> &nbsp; <span class="f">H = h₀ + (v₀ sin θ)² / 2g</span>
+            </p>
+          </details>
+          <details>
+            <summary>Refleksi</summary>
+            <p>
+              1) Dengan h₀ = 0 dan g Bumi, temukan dua sudut berbeda yang mengenai target yang sama. 2) Berapa
+              jauh peluru terbang di Bulan dibanding Bumi dengan parameter yang sama? 3) Naikkan h₀: apakah
+              sudut terbaik masih 45°?
+            </p>
+          </details>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="tut" aria-labelledby="tt">
+      <form method="dialog">
+        <h2 id="tt" style="font-size: 1.5rem">Selamat datang di lab!</h2>
+        <ol>
+          <li>Atur v₀, sudut, dan tinggi dengan slider.</li>
+          <li>Seret planet ke arena untuk mengganti gravitasi dan suasana langit.</li>
+          <li>Tekan <b>Tembak</b>. Lihat grafik R(θ) untuk mencari sudut terjauh.</li>
+        </ol>
+        <button class="btn" value="ok">Mulai</button>
+      </form>
+    </dialog>
+    <script src="script.js"></script>
+  </body>
+</html>

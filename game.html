@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Game Meriam</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="game" data-page="game">
+    <header class="gbar">
+      <a class="btn ghost" id="lab" href="index.html" aria-label="Lab utama"><i class="fa-solid fa-house" aria-hidden="true"></i></a
+      ><button class="btn ghost" id="gback" type="button" hidden><i class="fa-solid fa-list" aria-hidden="true"></i></button>
+      <h1 id="gtitle">Game Meriam</h1>
+      <span id="gstat"></span>
+    </header>
+    <main>
+      <nav id="gmenu" aria-label="Pilih level">
+        <p style="margin: 0">
+          Bintang terkumpul: <progress id="gp" max="93" value="0"></progress> <span id="gpt"></span>
+        </p>
+        <div id="lvgrid"></div>
+      </nav>
+      <section id="gplay" hidden aria-label="Arena 3D">
+        <div id="v3">
+          <canvas
+            id="c3"
+            role="img"
+            aria-label="Arena 3D: seret untuk memutar kamera, scroll untuk zoom"
+          ></canvas>
+          <p id="gmsg" role="status"></p>
+        </div>
+        <div class="gctl">
+          <div>
+            <label for="gv">Kecepatan <output id="gvo"></output></label
+            ><input id="gv" type="range" min="5" max="40" step="1" value="20" />
+          </div>
+          <div>
+            <label for="ga">Sudut angkat <output id="gao"></output></label
+            ><input id="ga" type="range" min="5" max="85" step="1" value="45" />
+          </div>
+          <div>
+            <label for="gz">Arah (azimut) <output id="gzo"></output></label
+            ><input id="gz" type="range" min="-45" max="45" step="1" value="0" />
+          </div>
+          <button class="btn" id="gfire" type="button">Tembak</button>
+          <button class="btn ghost" id="gnext" type="button" hidden>Level berikutnya</button>
+        </div>
+      </section>
+    </main>
+    <dialog id="win" class="win-dialog" aria-labelledby="win-title">
+      <div class="win-card">
+        <p class="win-ribbon">LEVEL SELESAI!</p>
+        <h2 id="win-title">Kamu menang!</h2>
+        <div id="win-stars" class="win-stars" aria-label="Bintang yang didapat"></div>
+        <p id="win-score" class="win-score"></p>
+        <p id="win-detail" class="win-detail"></p>
+        <div class="win-actions">
+          <button class="win-action" id="win-menu" type="button" aria-label="Menu level"><i class="fa-solid fa-list" aria-hidden="true"></i></button>
+          <button class="win-action" id="win-retry" type="button" aria-label="Ulangi level"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i></button>
+          <button class="win-action" id="win-next" type="button" aria-label="Level berikutnya"><i class="fa-solid fa-forward-step" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </dialog>
+    <script src="script.js"></script>
+  </body>
+</html>
